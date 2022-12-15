@@ -1,31 +1,53 @@
-import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import CurrentJobButton from '../CurrentJobButton/CurrentJobButton';
-
+import { Link, NavLink } from 'react-router-dom';
+import CartWidget from '../CartWidget/CartWidget';
+import Container from 'react-bootstrap/Container';
+ 
 const NavBar = () => {
   
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
-        <Navbar.Brand href="#home">
+        <Link to="/">
           <img
-              src="src/assets/anj-containers-logo.jpg"
+              src="public/imagenes/anj-containers-logo.jpg"
               width="30"
               height="30"
               className="d-inline-block align-top"
-              alt="React Bootstrap logo"
+              alt="logo"
             />
-        </Navbar.Brand>
+        </Link>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="#features">New job</Nav.Link>
-            <Nav.Link href="#pricing">Opened Containers</Nav.Link>
+          <Nav className="me-auto d-flex">
+            <NavLink  
+            to='categoria/motos' 
+            className={({isActive})=> isActive? 
+              "btn btn-primary mx-2"
+              :"btn btn-outline-primary mx-1"}
+            >
+                Motos
+            </NavLink>
+            <NavLink 
+            to='categoria/autos' 
+            className={({isActive})=> isActive? 
+              "btn btn-primary mx-2"
+              :"btn btn-outline-primary mx-1"}
+            >
+                Autos
+            </NavLink>
+            <NavLink 
+            to='categoria/yates' 
+            className={({isActive})=> isActive? 
+              "btn btn-primary mx-2"
+              :"btn btn-outline-primary mx-1"}
+            >
+                Yates
+            </NavLink>
           </Nav>
           <Nav>
-            <Nav.Link href="#"><CurrentJobButton /></Nav.Link>
+            <Link to="/carrito"><CartWidget/></Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
