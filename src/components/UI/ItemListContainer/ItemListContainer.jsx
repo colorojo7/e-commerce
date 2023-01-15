@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
-import { gFetch } from "../../../helpers/gFetch";
+import Loading from "../../Loading/Loading";
 import ItemList from "./ItemList/ItemList";
+import { getFirestore, getDocs, collection, query, where } from "firebase/firestore"
 
 
 const ItemListContainer = () => {
@@ -9,27 +10,29 @@ const ItemListContainer = () => {
   const [ loading, setLoading ]=useState(true)
   const {categoriaId} = useParams() 
 
+ 
   useEffect(()=>{
-    console.log(categoriaId); 
-    if (categoriaId) {
-      gFetch()
-      .then(data=>setProd(data.filter( item => item.categoria === categoriaId)))
+    
+      const db = getFirestore()
+      const queryCollection=collection(db, 'productos')
+      
+      const queryOption = categoriaId ? 
+                    query (queryCollection, where('categoria','==',categoriaId)) 
+                    : 
+                    queryCollection
+     
+      getDocs(queryOption)
+      .then(res => setProd(res.docs.map(item => ({id:item.id, ...item.data()}))))
       .catch(err=>console.log(err))
       .finally(()=> setLoading(false) )
-    } else {
-      gFetch()
-      .then(data=>setProd(data))
-      .catch(err=>console.log(err))
-      .finally(()=> setLoading(false) )
-    }
-  },[categoriaId]);
 
+  },[categoriaId])
 
 return (
   <div className="d-flex flex-wrap justify-content-center"> 
     {
     loading ? 
-      <h2>Cargando...</h2>
+      <Loading/>
         :
       <ItemList productos={productos}/>
     }

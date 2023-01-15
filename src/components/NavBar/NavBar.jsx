@@ -4,6 +4,12 @@ import { Link, NavLink } from 'react-router-dom';
 import CartWidget from '../CartWidget/CartWidget';
 import Container from 'react-bootstrap/Container';
  
+ export const listCategory = [
+   { id:"abc12" , name:"Motos", path:"motos"},
+   { id:"abc23" , name:"Autos", path:"autos"},
+   { id:"abc34" , name:"Yates", path:"yates"}
+ ]
+
 const NavBar = () => {
   
   return (
@@ -11,7 +17,7 @@ const NavBar = () => {
       <Container>
         <Link to="/">
           <img
-              src="public/imagenes/anj-containers-logo.jpg"
+              src="/imagenes/anj-containers-logo.jpg"
               width="30"
               height="30"
               className="d-inline-block align-top"
@@ -21,34 +27,19 @@ const NavBar = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto d-flex">
-            <NavLink  
-            to='categoria/motos' 
-            className={({isActive})=> isActive? 
-              "btn btn-primary mx-2"
-              :"btn btn-outline-primary mx-1"}
-            >
-                Motos
-            </NavLink>
-            <NavLink 
-            to='categoria/autos' 
-            className={({isActive})=> isActive? 
-              "btn btn-primary mx-2"
-              :"btn btn-outline-primary mx-1"}
-            >
-                Autos
-            </NavLink>
-            <NavLink 
-            to='categoria/yates' 
-            className={({isActive})=> isActive? 
-              "btn btn-primary mx-2"
-              :"btn btn-outline-primary mx-1"}
-            >
-                Yates
-            </NavLink>
+
+            {listCategory.map(({id, name, path})=><NavLink  
+                                                    key={id}
+                                                    to={`categoria/${path}`} 
+                                                    className={({isActive})=> isActive? 
+                                                      "btn btn-primary mx-2"
+                                                      :"btn btn-outline-primary mx-1"}
+                                                    >{name}
+                                                  </NavLink>
+            )}
+            
           </Nav>
-          <Nav>
-            <Link to="/carrito"><CartWidget/></Link>
-          </Nav>
+          <CartWidget/>
         </Navbar.Collapse>
       </Container>
     </Navbar>

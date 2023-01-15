@@ -1,13 +1,15 @@
 import Badge from 'react-bootstrap/Badge';
-import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
+import { useCartContext } from '../../context/Context';
 
-function Carrito_btn() {
+function CartWidget() {
+  const{totalQ} = useCartContext()
   return (
-    <Button variant="primary">
-      Carrito <Badge bg="secondary">1</Badge>
-      <span className="visually-hidden"></span>
-    </Button>
+    <Link to={'/carrito'} className="btn btn-primary">
+        Carrito <Badge bg="secondary">{totalQ>0 && totalQ}</Badge>
+        <span className="visually-hidden"></span> 
+    </Link>
   );
 }
 
-export default Carrito_btn;
+export default CartWidget;

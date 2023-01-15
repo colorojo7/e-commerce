@@ -7,12 +7,12 @@ import CarritoUI from './components/UI/CarritoUI/CarritoUI';
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { CartContext } from './context/Context';
+import { CartContextProvider } from './context/Context';
 
 function App() {
 
   return (
-    <CartContext.Provider value={{}}>
+    <CartContextProvider>
       <BrowserRouter>
         <NavBar />
         <Routes>
@@ -26,7 +26,7 @@ function App() {
           
           
       </BrowserRouter>
-    </CartContext.Provider>
+    </CartContextProvider>
   )
 }
 
